@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilo.css">
+    <title>Builder - Patrón de diseño</title>
+</head>
+<body>
+    <header>
+        <h1>Patrones de Diseño</h1>
+    </header>
+    <main>
+        <div class="apartado">
+            <h2>Builder - Constructor</h2>
+            <p>
+                El patrón builder se usa para permitir la creación de una variedad de objetos complejos desde un objeto
+                fuente (Producto), el objeto fuente se compone de una variedad de partes que contribuyen individualmente a la creación de 
+                cada objeto complejo a través de un conjunto de llamadas secuenciales a una implementación específica que extienda la clase 
+                Abstract Builder. Así, cada implementación existente de Abstract Builder construirá un objeto complejo Producto de una forma 
+                diferente deseada.
+            </p>
+            <p>
+                El patrón builder es creacional.
+            </p>
+            <p>
+                A menudo, el Patrón builder construye el patrón Composite, un patrón estructural.
+            </p>
+            <p>
+                Intención: Abstrae el proceso de creación de un objeto complejo, centralizando dicho proceso en un único punto, de tal 
+                forma que el mismo proceso de construcción pueda crear representaciones diferentes.
+            </p>
+        </div>
+        <div class="apartado">
+            <h2>Diagrama de clases</h2>
+            <ul>
+                <li>Builder
+                    <ul>
+                        <li>clase abstracta para crear productos.</li>
+                    </ul>
+                </li>
+            </ul>
+            <ul>
+                <li>Concrete Builder
+                    <ul>
+                        <li>implementación del Builder.</li>
+                        <li>construye y reúne las partes necesarias para construir los productos.</li>
+                    </ul>
+                </li>
+            </ul>
+            <ul>
+                <li>Director
+                    <ul>
+                        <li>construye un objeto, un producto concreto, usando el patrón Builder configurando el Concrete Builder a usar.</li>
+                    </ul>
+                </li>
+            </ul>
+            <ul>
+                <li>Producto
+                    <ul>
+                        <li>es el objeto concreto bajo construcción</li>
+                    </ul>
+                </li>
+            </ul>
+            <img src="/image/diagrama_builder.png" alt="">
+        </div>  
+        <div class="apartado">
+            <h2>Ventajas</h2>
+            <ul>
+                <li>Reduce el acoplamiento</li>
+                <li>Permite variar la representación interna de estructuras complejas, respetando la interfaz común de la clase Builder.</li>
+                <li>Se independiza el código de construcción de la representación. Las clases concretas que tratan las representaciones internas no forman parte de la interfaz del Builder.</li>
+                <li>Cada ConcreteBuilder tiene el código específico para crear y modificar una estructura interna concreta.</li>
+                <li>Distintos Director con distintas utilidades (visores, parsers, etc) pueden utilizar el mismo ConcreteBuilder.</li>
+                <li>Permite un mayor control en el proceso de creación del objeto. El Director controla la creación paso a paso, solo cuando el Builder ha terminado de construir el objeto lo recupera el Director</li>
+            </ul>
+        </div>
+        <div class="apartado">
+            <h2>Inconvenientes</h2>
+            <p>
+                El patrón Constructor consta de un fuerte vínculo entre el producto, el constructor específico y las clases del proceso 
+                de diseño, así que puede ser difícil hacer cambios en el proceso básico. La construcción de los objetos requiere conocer 
+                su uso y su entorno concretos. Utilizar patrones conocidos, como el patrón de diseño Builder, puede hacer que los 
+                programadores pasen por alto soluciones más sencillas y elegantes.
+            </p>
+        </div>
+        <div class="apartado">
+            <h2>Ejemplo</h2>
+            <p>
+                Vamos a repasar los conceptos mediante un caso práctico en Java. Crearemos 
+                distintos tipos de coches (berlina, coupé y monovolúmen) abstrayéndonos de su representación.
+            </p>
+            <p>
+                En primer lugar definiremos el producto objeto. Fijarse en la manera de definir los setter, ésto es una buena práctica 
+                a la hora de asignar múltiples propiedades a la vez, ya que podremos hacerlo de la forma: coche.cilindrada(2000).potencia(300)...
+            </p>
+            <pre>
+    public class Coche {
+                    
+        private int cilindrada = 0;
+                        
+        private int potencia = 0;
+
+        private String tipo = “”;
+
+        private int num_asientos = 0.
+
+
+        public Coche cilindrada(int cilindrada) {
+
+            this.cilindrada = cilindrada;
+
+            return this;
+
+        }
+
+        public Coche potencia(int potencia) {
+
+            this.potencia = potencia;
+
+            return this;
+
+        }
+
+        public Coche tipo(String tipo) {
+
+            this.tipo = tipo;
+
+            return this;
+
+        }
+
+        public Coche numAsientos(int num_asientos) {
+
+            this.num_asientos = num_asientos;
+
+            return this;
+
+        }
+
+    }
+            </pre>
+            <p>A continuación crearemos un constructor abstracto capaz de construir todos los tipos de coche:</p>
+            <pre>
+    abstract class ConstructorCoches {
+
+        protected Coche coche;
+
+
+        public void nuevo() {
+
+            coche = new Coche();
+
+        }
+
+        public Coche obtenerCoche() {
+
+            return coche;
+                        
+        }
+
+        public abstract void construirMotor();
+
+        public abstract void construirCarroceria();
+
+    }
+            </pre>
+            <p>El siguiente paso es definirlos Constructores concretos:</p>
+            <pre>
+    public class ConstructorCochesAudi extends ConstructorCoches {
+
+        public void construirMotor() {
+
+            cohe.cilindrada(2995).potencia(300);
+
+        }
+
+        public void construirCarroceria() {
+
+            cohe.tipo(“Audi A7 Sportback 3.0 TFSI quattro S tronic 7 vel.”).num_asientos (5);
+
+        }
+
+    }
+
+    public class ConstructorCochesBMW extends ConstructorCoches {
+
+        public void construirMotor() {
+
+            cohe.cilindrada(4395).potencia(560);
+
+        }
+
+        public void construirCarroceria() {
+
+            cohe.tipo(“BMW Serie 5 2016”).num_asientos (5);
+
+        }
+
+    }
+
+    public class ConstructorCochesTesla extends ConstructorCoches {
+
+        public void construirMotor() {
+
+            cohe.potencia(560);
+
+        }
+
+        public void construirCarroceria() {
+
+            cohe.tipo(“Tesla Model S”).num_asientos (5);
+
+        }
+
+    }
+            </pre>
+            <p>Ahora toca especificar al Director, que será el que actuará de intermediario entre el usuario de los Constructores y los propios Constructores:</p>
+            <pre>
+    public class Concesionario {
+
+        private ConstructorCoches constructorCoches;
+
+        public void establecerConstructor(ConstructorCoches cc) {
+
+            this.constructorCoches=cc;
+                        
+        }
+
+        public void obtenerCoche() {
+                    
+            return constructorCoches.obtenerCoche();
+                    
+        }
+
+        public void construirCoche() {
+
+            constructorCoches.nuevo();
+
+            constructorCoches.construirMotor();
+
+            constructorCoches.construirCarroceria();
+
+        }
+
+    }
+            </pre>
+            <p>Y para finalizar, un cliente que use el constructor:</p>
+            <pre>
+    public static void main(String[] args) {
+
+        Concesionario director = new Concesionario();
+
+        ConstructorCoches constructor;
+
+        if(args[0].equals(“Audi”)) {
+
+            constructor = new ConstructorCochesAudi();
+
+        }
+
+        else if(args[0].equals(“BMW”)) {
+
+            constructor = new ConstructorCochesBMW();
+
+        }
+
+        else if(args[0].equals(“Tesla”)) {
+
+            constructor = new ConstructorCochesTesla();
+
+        }
+
+        director.establecerConstructor(constructor);
+
+        director.construirCoche();
+
+        Coche producto = director.obtenerCoche();
+
+    }
+            </pre>
+        </div>
+    </main>
+    <div class="volver">
+        <a href="index.html">Volver al Indice</a>
+    </div>
+    <footer>
+        <div class="referencias">
+            <h3>Contenido sacado de: </h3>
+            <ul>
+                <li><a href="https://es.wikipedia.org/wiki/Builder_(patrón_de_diseño)">Wikipedia</a></li>
+                <li><a href="https://programacion.net/articulo/patrones_de_diseno_iii_patrones_de_creacion_builder_1002">programación.net</a></li>
+                <li><a href="https://www.ionos.es/digitalguide/paginas-web/desarrollo-web/patron-de-diseno-builder/">ionos.es</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>
