@@ -30,10 +30,15 @@ header {
 
 header>h1 {
   width: 100%;
+  text-align: center;
 }
 
 img{
-  width: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  height: 90%;
 }
 
 main {
@@ -47,7 +52,7 @@ div.apartado {
 h2, h3 {
   border-bottom: 2px solid #FE5F55;
   padding-bottom: 5px;
-  color: #495867;
+  color: tomato;;
 }
 
 p {
@@ -74,6 +79,7 @@ div.volver {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 15px;
 }
 
 div.volver>a {
@@ -94,9 +100,25 @@ div.volver>a:hover {
 footer {
   background-color: #f7f7ff;
   border-top: 2px solid #577399;
+  padding-top: 10px;
+  padding-left: 30px;
 }
 
 div.referencias {
   margin: 15px 20% 0 20%;
   padding-bottom: 25px;
 }
+
+section {
+  margin: 15px 20% 15px 20%;
+  padding-bottom: 25px;
+}
+
+section ul li {
+	list-style:square;
+}
+
+section a {
+	color:#3300CC;
+}
+

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<title>Patrones de diseño. ITERATOR</title>
+		<link rel="stylesheet" href="css/estilo.css" type="text/css" media="all">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="author" content="Sergio Vaquero Garcia">  
+	</head>
+<body>
+	<header><h1>Entornos de Desarrollo 2021. Patrones de Diseño</h1>
+	</header>
+	 
+	<main>
+		<div class="apartado">
+			<h2>Iterator</h2>
+	
+			<p>Patrón de diseño de comportamiento</p>
+			<p>Este patrón de diseño permite recorrer una estructura de datos sin que sea necesario conocer la estructura interna de la misma. Es especialmente útil cuando trabajamos con estructuras de datos complejas, ya que nos permite recorrer sus elementos mediante un Iterador, el Iterador es una interface que proporciona los métodos necesarios para recorrer los elementos de la estructura de datos, los métodos más comunes son:
+			</p>
+			<ul>
+				<li><strong>hasNext</strong>: Método que regresa un booleano para indicar si existen más elementos en la estructura por recorrer. True si existen más y false si hemos llegado al final y no hay más elementos por recorrer.</li>
+				<li><strong>next</strong>: Regresa el siguiente elemento de la estructura de datos.</li>
+			</ul>
+			<img src="image/iterator-diagram.png" title="Estructura del patr�n de dise�o iterator."/><br/>
+			<p>Estructura del patrón de diseño iterator.</p><br/>
+
+			<p>Los elementos del patrón Iterator se describen a continuación:</p>
+
+			<ul>
+				<li><strong>Client</strong>: Actor que utiliza al Iterator.</li>
+				<li><strong>Aggregate</strong>: Interface que define la estructura de las clases que pueden ser iteradas.</li>
+				<li><strong>ConcreteAggregate</strong>: Clase que contiene la estructura de datos que deseamos iterar.</li>
+				<li><strong>IIterator</strong>: Interface que define la estructura de los iteradores, la cual define los métodos necesarios para poder realizar la iteración sobre el ConcreteAggregator.</li>
+				<li><strong>ConcreteIterator</strong>: Implementación de un iterador concreto, el cual hereda de IIterator para implementar de forma concreta cómo iterar un ConcreteAggregate.</li>
+			</ul>
+
+			<img src="image/iterator-sequence.png" title="Diagrama de secuencia del patrón Iterator."/><br/>
+		</div>
+		
+		<div class="apartado">	
+			<h2>Diagrama de secuencia del patrón Iterator.</h2>
+
+			<ul>
+				<li>El cliente solicita al <strong>ConcreteAggregate</strong> la creación de un iterador.</li>
+				<li>El <strong>ConcreteAggregate</strong> crea un nuevo Iterador.</li>
+				<li>El cliente, para recorrer los elementos, entra en un ciclo hasta que no existen más elementos en el iterador, el método hasNext le indicará cuándo se ha llegado al final.</li>
+				<li>El cliente solicita el siguiente elemento al iterador mediante el método next.</li>
+				<li>Si existen más elementos nos regresamos al paso tres, esto se repite hasta finalizar el recorrido.</li>
+			</ul>
+		</div>
+	
+	<div class="apartado">
+		<h2>Ejemplo del mundo real</h2>
+
+		<p>Mediante la implementación del patrón de diseño Iterator crearemos una aplicación que nos permita recorrer una estructura organizacional jerárquica, mediante la implementación de un iterador, el cual nos permitirá recorrer todo el árbol de la estructura de forma secuencial.</p>
+	
+		<img src="image/iterator2.png" title="Descubre como el patrón Iterator nos ayuda a resolver este problema"/><br/>
+		<p>Descubre como el patrón Iterator nos ayuda a resolver este problema</p><br/>
+		
+		
+	</div>
+	</main>
+	
+	<section>
+		<h2>Referencia Bibliografica utilizada:</h2><br/>
+		<ul>
+			<li><a href="https://reactiveprogramming.io/blog/es/patrones-de-diseno/iterator">Blog reactiveprogramming.io</a></li>
+			<li><a href="https://es.wikipedia.org/wiki/Iterador_(patr%C3%B3n_de_dise%C3%B1o)">Wikipedia</a></li>
+			<li><a href="https://refactoring.guru/es/design-patterns/iterator">Refactoring.guru: Consulta de Ejemplo en el mundo real </a></li>
+			
+		</ul>
+		
+	</section>
+	<div class="volver">
+        <a href="index.html">Volver a la pagina principal</a>
+    </div>
+    
+    <footer>
+    	<p>Patrones de diseño. ITERATOR by Sergio Vaquero Garcia</p>
+    </footer>
+	
+</body>
+</html>
