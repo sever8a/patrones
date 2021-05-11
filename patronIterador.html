@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilo.css">
+    <title>Iterador - Patr�n de dise�o</title>
+</head>
+
+<body>
+    <header>
+        <h1>Patrones de Diseño</h1>
+    </header>
+    <main>
+        <div class="apartado">
+            <h2>Iterador - Comportamiento</h2>
+            <p>
+                Su utilidad es proporcionar acceso secuencial a un número de elementos presentes dentro de un objeto de
+                colección sin realizar ningún intercambio de información relevante.
+            </p>
+            <p>
+                Algunos de los métodos que podemos definir en la interfaz Iterador son:
+
+                Primero(), Siguiente(), HayMas() y ElementoActual().
+
+                Este patrón de diseño permite recorrer una estructura de datos sin que sea necesario conocer la
+                estructura
+                interna de la misma.
+            </p>
+        </div>
+        <div class="apartado">
+            <h2>Motivación</h2>
+            <p>
+                El patrón surge del deseo de acceder a los elementos de un contenedor de objetos (por ejemplo, una
+                lista)
+                sin exponer su representación interna. Además, es posible que se necesite más de una forma de recorrer
+                la
+                estructura siendo para ello necesario crear modificaciones en la clase.
+            </p>
+            <p>
+                La solución que propone el patrón es añadir métodos que permitan recorrer la estructura sin referenciar
+                explícitamente su representación. La responsabilidad del recorrido se traslada a un objeto iterador.
+            </p>
+            <p>
+                El problema de introducir este objeto iterador reside en que los clientes necesitan conocer la
+                estructura
+                para crear el iterador apropiado.
+            </p>
+            <p>
+                Esto se soluciona generalizando los distintos iteradores en una abstracción y dotando a las estructuras
+                de
+                datos de un método de fabricación que cree un iterador concreto.
+            </p>
+            <img src="image/Ejemplo_patrón_iterador_2.png" alt="Ejemplo del patron iterador">
+        </div>
+        <div class="apartado">
+            <h2>Aplicabilidad</h2>
+            <p>
+                El patrón iterator permite el acceso al contenido de una estructura sin exponer su representación
+                interna.
+                Además diferentes iteradores pueden presentar diferentes tipos de recorrido sobre la estructura
+                (recorrido
+                de principio a fin, recorrido con saltos...). Por otro lado los iteradores no tienen por qué limitarse a
+                recorrer la estructura, sino que podrían incorporar otro tipo de lógica (por ejemplo, filtrado de
+                elementos). Es más, dados diferentes tipos de estructuras, el patrón iterador permite recorrerlas todas
+                utilizando una interfaz común uniforme. </p>
+            <p>
+        </div>
+        <div class="apartado">
+            <h2>Estructura</h2>
+            <img src="image/Estructura_patrón_iterador.png" alt="Esquema de la estructura del patron iterador">
+        </div>
+        <div class="apartado">
+            <h2>Participantes</h2>
+            <p>
+                Las entidades participantes en el diseño propuesto por el patrón iterador son:
+            </p>
+            <ul>
+                <li>Iterador (Iterator) define la interfaz para recorrer el agregado de elementos y acceder a ellos, de
+                    manera que el cliente no tenga que conocer los detalles y sea capaz de manejarlos de todos modos.
+                </li>
+                <li>Iterador Concreto (ConcreteIterator) implementa la interfaz propuesta por el Iterador. Es el que se
+                    encarga de mantener la posición actual en el recorrido de la estructura.</li>
+                <li>Agregado (Aggregate) define la interfaz para el método de fabricación de iteradores.</li>
+                <li>Agregado Concreto (ConcreteAggregate) implementa la estructura de datos y el método de fabricación
+                    de
+                    iteradores que crea un iterador específico para su estructura.</li>
+            </ul>
+        </div>
+        <div class="apartado">
+            <h2>Implementación</h2>
+            <p>
+                Para la creación del patrón iterador debe implementarse el control de la iteración (pudiendo ser un
+                iterador
+                externo que ofrece los métodos para que el cliente recorra la estructura paso a paso, o un iterador
+                interno
+                que ofrece un método de actuación sobre la estructura que, de manera transparente al cliente, la recorre
+                aplicándose a todos sus elementos) y definirse el recorrido. A mayores se podrían implementar
+                operaciones
+                adicionales en el iterador o definir la estructura de este de una manera más robusta ante cambios en la
+                estructura. Hay que tener especial cuidado en la implementación de iteradores con accesos privilegiados,
+                iteradores para estructuras compuestas o iteradores nulos.
+            </p>
+            <pre>
+            public class Vector2 {
+                public int[] _datos;
+            
+                public Vector2(int valores){ 
+                    _datos = new int[valores];
+                    for (int i = 0; i < _datos.length; i++){
+                        _datos[i] = 0; 
+                    }
+                }    
+                
+                public int getValor(int pos){ 
+                    return _datos[pos]; 
+                }
+            
+                public void setValor(int pos, int valor){ 
+                    _datos[pos] = valor; 
+                }
+            
+                public int dimension(){ 
+                    return _datos.length; 
+                }
+                
+                public IteradorVector iterador(){
+                    return new IteradorVector(this); 
+                }
+            }
+        </pre>
+            <p>
+                Definición del iterador concreto.
+            </p>
+            <pre>
+            public class IteradorVector{
+                private int[] _vector;
+                private int _posicion;
+                 
+                public IteradorVector(Vector2 vector) {
+                    _vector = vector._datos;
+                    _posicion = 0;
+                }
+                      
+                public boolean hasNext(){
+                    if (_posicion < _vector.length) 
+                     return true;
+                 else
+                     return false;
+                }
+            
+                public Object next(){
+                 int valor = _vector[_posicion];
+                 _posicion++;
+                 return valor;
+                }
+            }
+        </pre>
+            <p>
+                Ejemplo de uso:
+            </p>
+            <pre>
+            public static void main(String argv[]) {
+                Vector2 vector = new Vector2(5);
+                
+                //Creación del iterador
+                IteradorVector iterador = vector.iterador();
+                
+                //Recorrido con el iterador
+                while (iterador.hasNext())
+                    System.out.println(iterador.next());    	    	
+            }
+        </pre>
+            <p>
+                En java ya existe una interfaz iterator que hace a las veces de abstracción. Todos los iteradores
+                utilizados
+                en sus librerías cumplen esta interfaz, lo que permite tratarlos a todos ellos de manera uniforme. Hacer
+                que
+                nuestro IteradorVector implementase Iterator permitiría que fuese utilizado por otras librerías y
+                programas
+                de manera transparente.
+            </p>
+        </div>
+    </main>
+    <div class="volver">
+        <a href="index.html">Volver al Indice</a>
+    </div>
+    <footer>
+        <div class="referencias">
+            <h3>Contenido sacado de: </h3>
+            <ul>
+                <li><a
+                        href="https://es.wikipedia.org/wiki/Iterador_(patr%C3%B3n_de_dise%C3%B1o)#Prop%C3%B3sito">Wikipedia</a>
+                </li>
+                <li><a
+                        href="https://programacion.net/articulo/patrones_de_diseno_iii_patrones_de_creacion_builder_1002">programación.net</a>
+                </li>
+                <li><a
+                        href="https://www.ionos.es/digitalguide/paginas-web/desarrollo-web/patron-de-diseno-builder/">ionos.es</a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>
