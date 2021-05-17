@@ -41,6 +41,13 @@ img{
   height: 90%;
 }
 
+.img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
 main {
   margin: 0 20%; 
 }

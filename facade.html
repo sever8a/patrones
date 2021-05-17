@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<title>Patrones de diseño. FACADE</title>
+		<link rel="stylesheet" href="css/estilo.css" type="text/css" media="all">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="author" content="Sergio Vaquero Garcia">  
+	</head>
+<body>
+	<header><h1>Entornos de Desarrollo 2021. Patrones de Diseño</h1>
+	</header>
+	 
+	<main>
+		<div class="apartado">
+			<h2>Facade</h2>
+	
+			
+			<p>
+			Facade es un patrón de diseño <em>estructural</em> que proporciona una interfaz simplificada a una biblioteca, un framework o cualquier otro grupo complejo de clases.
+			</p>
+			<p>Cuando diseñamos una aplicación, es correcto, lógico y usual crear subdivisiones en el sistema para organizar nuestro código, utilizando diferentes criterios, ya sean por funcionalidad o conceptuales.
+			</p>
+			<p>Facade (fachada) nos permite crear una interfaz que unifique el acceso a dichos subsistemas, de modo que simplifica el acceso y lo hace más fácil de usar.</p>
+			<p>Podemos verlo como un nivel superior en la abstracción de nuestro código, donde para realizar complicadas o sencillas operaciones solo necesitamos tener acceso a la clase fachada para ejecutar nuestro programa.</p>
+			
+			<img class="img" src="image/facade1.png" title="Patrón de diseño facade."/><br/>
+			
+			<br><h2><b>Problema</b></h2>
+			
+			<p>Imagina que debes lograr que tu código trabaje con un amplio grupo de objetos que pertenecen a una sofisticada biblioteca o framework. Normalmente, debes inicializar todos esos objetos, llevar un registro de las dependencias, ejecutar los métodos en el orden correcto y así sucesivamente.</p>
+			<p>Como resultado, la lógica de negocio de tus clases se vería estrechamente acoplada a los detalles de implementación de las clases de terceros, haciéndola difícil de comprender y mantener.</p>			
+			
+			<br><h2><b>Solución</b></h2>
+			<p>Una fachada es una clase que proporciona una interfaz simple a un subsistema complejo que contiene muchas partes móviles. Una fachada puede proporcionar una funcionalidad limitada en comparación con trabajar directamente con el subsistema. Sin embargo, tan solo incluye las funciones realmente importantes para los clientes.</p>
+			<p>Tener una fachada resulta útil cuando tienes que integrar tu aplicación con una biblioteca sofisticada con decenas de funciones, de la cual sólo necesitas una pequeña parte</p>
+			<p>Por ejemplo, una aplicación que sube breves vídeos divertidos de gatos a las redes sociales, podría potencialmente utilizar una biblioteca de conversión de vídeo profesional. Sin embargo, lo único que necesita en realidad es una clase con el método simple <em>codificar(nombreDelArchivo, formato)</em>. Una vez que crees dicha clase y la conectes con la biblioteca de conversión de vídeo, tendrás tu primera fachada.</p>
+
+			<br><h2><b>Estructura</b></h2>
+			<img src="image/facade2.png" title="Estructura facade."/><br/>
+		</div>
+		
+	<div class="apartado">
+		<h2>Ejemplo del mundo real</h2>
+
+		<p>Cuando llamas a una tienda para hacer un pedido por teléfono, un operador es tu fachada a todos los servicios y departamentos de la tienda. El operador te proporciona una sencilla interfaz de voz al sistema de pedidos, pasarelas de pago y varios servicios de entrega.</p>
+	
+		<img class="img" src="image/live-example-facade.png" title="Analogía mundo real facade"/><br/>
+		
+		<br><p>En lugar de hacer que tu código trabaje con decenas de las clases del framework directamente, creas una clase fachada que encapsula esa funcionalidad y la esconde del resto del código. Esta estructura también te ayuda a minimizar el esfuerzo de actualizar a futuras versiones del framework o de sustituirlo por otro. Lo único que tendrías que cambiar en la aplicación es la implementación de los métodos de la fachada.</p>
+		
+	</div>
+	<div class="apartado">
+		<h2>Ejemplo de uso</h2>
+
+		<p>En este ejemplo, el patrón Facade simplifica la interacción con un framework complejo de conversión de vídeo.</p>
+	
+		<img class="img" src="image/example-facade.png" title="Ejemplo facade"/><br/>
+		
+	</div>
+	
+	</main>
+	
+	<section>
+		<h2>Referencia Bibliografica utilizada:</h2><br/>
+		<ul>
+			<li> Libro de la editorial RA-MA "Entornos de Desarrollo"</li>
+			<li><a href="https://es.wikipedia.org/wiki/Facade_(patr%C3%B3n_de_dise%C3%B1o)">Wikipedia</a></li>
+			<li><a href="https://refactoring.guru/es/design-patterns/facade">Refactoring.guru: Facade </a></li>
+			
+		</ul>
+		
+	</section>
+	<div class="volver">
+        <a href="index.html">Volver a la pagina principal</a>
+    </div>
+    
+    <footer>
+    	<p>Patrones de diseño. FACADE by María del Rosario Martínez Marco</p>
+    </footer>
+	
+</body>
+</html>
