@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilo.css">
+    <title>State - Patrones de diseño</title>
+</head>
+
+<body>
+    <header>
+        <h1>Patrones de diseño</h1>
+    </header>
+    <main>
+        <div class="apartado">
+            <h2>State</h2>
+            <p>
+                <strong>State</strong> o <strong>Estado</strong> es un patrón de diseño de comportamiento que nos
+                permite definir un comportamiento
+                diferente dependiendo del estado interno en que
+                se encuentre un objeto. Es decir, mediante la invocación del mismo método, el objeto se comporta de modo
+                diferente dependiendo del estado. Es como si el objeto cambiara su clase.
+            </p>
+        </div>
+        <div class="apartado">
+            <h2>Cuándo aplicarlo</h2>
+            <p>
+                El patrón State puede aplicarse cuando el comportamiento de nuestro programa se corresponde con una
+                <strong>máquina de estados finitos</strong>. La idea principal es que, en cualquier momento dado, un
+                programa puede
+                encontrarse en un número finito de estados. Dentro de cada estado único, el programa se comporta de
+                forma diferente y puede cambiar de un estado a otro instantáneamente. Sin embargo, dependiendo de un
+                estado actual, el programa puede cambiar o no a otros estados. Estas normas de cambio llamadas
+                transiciones también son finitas y predeterminadas.
+            </p>
+            <p>
+                Las máquinas de estado se implementan normalmente con muchos operadores condicionales (if o switch) que
+                seleccionan el comportamiento adecuado dependiendo del estado actual del objeto. Normalmente, este
+                “estado” es tan solo un grupo de valores de los campos del objeto.
+            </p>
+            <p>
+                La mayor debilidad de una máquina de estado basada en condicionales se revela una vez que empezamos a
+                añadir más y más estados y comportamientos dependientes de estados. La mayoría de
+                los métodos contendrán condicionales monstruosos que eligen el comportamiento adecuado de un método de
+                acuerdo con el estado actual. Un código así es muy difícil de mantener, porque cualquier cambio en la
+                lógica de transición puede requerir cambiar los condicionales de estado de cada método.
+            </p>
+            <p>
+                El problema tiende a empeorar con la evolución del proyecto. Es bastante difícil predecir todos los
+                estados y transiciones posibles en la etapa de diseño. Por ello, una máquina de estados esbelta, creada
+                con un grupo limitado de condicionales, puede crecer hasta convertirse en un abotargado desastre con el
+                tiempo.
+            </p>
+            <p>
+                En resumen, es conveniente aplicarlo en los siguientes casos:
+            </p>
+            <ul>
+                <li>
+                    Cuando tengas un objeto que se comporte de forma diferente dependiendo de
+                    su estado actual, haya un gran número de estados y el código específico del estado cambie con
+                    frecuencia.
+                </li>
+                <li>
+                    Cuando tengas una clase con condicionales muy largos que alteran el modo
+                    en que se comporta la clase de acuerdo con los valores actuales de los campos de la clase.
+                </li>
+                <li>
+                    Cuando tengas mucho código duplicado por estados similares y transiciones de
+                    una máquina de estados basada en condiciones.
+                </li>
+            </ul>
+        </div>
+        <div class="apartado">
+            <h2>Cómo funciona</h2>
+            <p>
+                Para crear el patrón State, nos crearemos un <strong>contexto</strong>, que nos servirá de interfaz con
+                el cliente, una
+                <strong>interfaz estado</strong> para encapsular las responsabilidades del contexto en el estado en que
+                se encuentre, y
+                una serie
+                de <strong>subclases estados concretos</strong> para definir los diferentes comportamientos de nuestro
+                objeto.
+            </p>
+            <p>
+                Este patrón sugiere que crees nuevas clases para todos los estados posibles de un objeto y extraigas
+                todos los comportamientos específicos del estado para colocarlos dentro de esas clases. En lugar de
+                implementar todos los comportamientos por su cuenta, el objeto original, llamado contexto, almacena una
+                referencia a uno de los objetos de estado que representa su estado actual y delega todo el trabajo
+                relacionado con el estado a ese objeto. Para la transición del contexto a otro estado, sustituye el
+                objeto de estado activo por otro objeto que represente ese nuevo estado. Esto sólo es posible si todas
+                las clases de estado siguen la misma interfaz y el propio contexto funciona con esos objetos a través de
+                esa interfaz.
+            </p>
+            <img src="image/state1.png" alt="Estructura del patrón State">
+        </div>
+        <div class="apartado">
+            <h2>Ejemplo</h2>
+            <p>
+                Supongamos que estamos creando un software para manejar el botón de llamada a un ascensor, obviamente se
+                comportará de forma diferente dependiendo de si se encuentra en el mismo piso desde el que se llama o si
+                se ecuentra
+                por debajo o por encima del piso desde el que se le llama.
+            </p>
+
+            <pre>
+    <strong>ESTADO</strong>
+    public interface Estado
+     {
+     void irPiso(int piso);
+     }
+</pre>
+
+            <pre>
+    <strong>CONTEXTO</strong>
+    public class Contexto
+     {
+     private Estado estado;
+     public void setEstado(Estado estado){
+     this.estado = estado;
+     }
+     public Estado getEstado(){
+     return estado;
+     }
+     public void llamar(int piso){
+     estado.irPiso(piso);
+     }
+     }</pre>
+
+            <pre>
+    <strong>ESTADO CONCRETO</strong>
+    public class estadoAscensorAbajo implements Estado
+     {
+     public void irPiso(int piso){
+     Ascensor ascensor = Ascensor.getAscensor();
+     ascensor.subir(piso - ascensor.getPiso());
+     }
+     }
+    public class estadoAscensorArriba implements Estado
+     {
+     public void irPiso(int piso){
+     Ascensor ascensor = Ascensor.getAscensor();
+     ascensor.bajar(ascensor.getPiso() - piso);
+     }
+     }
+    public class estadoAscensorMismo implements Estado
+     {
+     public void irPiso(int piso){
+     Ascensor ascensor = Ascensor.getAscensor();
+     ascensor.abrirPuerta();
+     }
+     }</pre>
+
+        </div>
+    </main>
+    <div class="volver"><a href="index.html">Volver</a></div>
+    <footer>
+        <div class="referencias">
+            <h3>Bibliografía:</h3>
+            <ul>
+                <li>Entornos de Desarrollo, Ed. RA-MA (Capítulo 1, apartado 1.6.1)</li>
+                <li><a href="https://refactoring.guru/es/design-patterns/state">refactoring.guru</a></li>
+                <li><a href="https://www.baeldung.com/java-state-design-pattern">baeldung.com</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+
+</html>
