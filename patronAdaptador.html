@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Vicente Antón Serrano">
+<link rel="stylesheet" href="css/estilo.css">
+<title>Adaptador - Patrones de diseño</title>
+</head>
+
+<body>
+	<header>
+		<h1>Patrones de Diseño</h1>
+	</header>
+	<main>
+		<div class="apartado">
+			<h2>Adaptador - Cuando se aplica</h2>
+            <p>Es recomendable utilizar el patrón adaptador cuando:
+                <ul>
+                    <li>se desea usar una clase existente, y su interfaz no sea igual a la necesitada.</li>
+                    <li>cuando se desea crear una clase reutilizable que coopere con clases no relacionadas. 
+                        Es decir, que las clases no tienen necesariamente interfaces compatibles.</li>
+                </ul>
+            </p>
+        </div>
+        <div class="apartado">
+            <h2>Como funciona</h2>
+            <p>Un adaptador envuelve uno de los objetos para esconder la complejidad de la conversión que tiene lugar tras bambalinas. 
+                El objeto envuelto ni siquiera es consciente de la existencia del adaptador.</p>
+            <p>Por ejemplo, puedes envolver un objeto que opera con metros y kilómetros con un adaptador que convierte todos los datos al sistema anglosajón, es decir, pies y millas.</p>
+            <p>Los adaptadores no solo convierten datos a varios formatos, sino que también ayudan a objetos con distintas interfaces a colaborar.</p> 
+            <p>Funciona así:
+                <ol>                
+                <li>El adaptador obtiene una interfaz compatible con uno de los objetos existentes.</li>
+                <li>Utilizando esta interfaz, el objeto existente puede invocar con seguridad los métodos del adaptador.</li>
+                <li>Al recibir una llamada, el adaptador pasa la solicitud al segundo objeto, pero en un formato y orden que ese segundo objeto espera.</li>
+                </ol>
+                En ocasiones se puede incluso crear un adaptador de dos direcciones que pueda convertir las llamadas en ambos sentidos.</p>
+        </div>
+        <div class="apartado">
+            <h2>Estructura, adaptador de objetos</h2>
+            <img src="image/estructuraAdaptador.png" alt="">
+            <ol>
+                <li>
+                <p>La clase <strong>Cliente</strong> contiene la lógica de negocio existente del programa.</p>
+                </li>
+                <li>
+                <p>La <strong>Interfaz con el Cliente</strong> describe un protocolo que otras clases deben seguir para poder colaborar con el código cliente.</p>
+                </li>
+                <li>
+                <p><strong>Servicio</strong> es alguna clase útil (normalmente de una tercera parte o heredada). El cliente no puede utilizar directamente esta clase porque tiene una interfaz incompatible.</p>
+                </li>
+                <li>
+                <p>La clase <strong>Adaptadora</strong> es capaz de trabajar tanto con la clase cliente como con la clase de servicio: implementa la interfaz con el cliente, mientras envuelve el objeto de la clase de servicio. La clase adaptadora recibe llamadas del cliente a través de la interfaz adaptadora y las traduce en llamadas al objeto envuelto de la clase de servicio, pero en un formato que pueda comprender.</p>
+                </li>
+                <li>
+                <p>El código cliente no se acopla a la clase adaptadora concreta siempre y cuando funcione con la clase adaptadora a través de la interfaz con el cliente. Gracias a esto, puedes introducir nuevos tipos de adaptadores en el programa sin descomponer el código cliente existente. Esto puede resultar útil cuando la interfaz de la clase de servicio se cambia o sustituye, ya que puedes crear una nueva clase adaptadora sin cambiar el código cliente.</p>
+                </li>
+            </ol>
+        </div>
+        <div class="apartado">
+            <h2>Ejemplo en Python</h2>
+            <pre lang="python">
+            class Target:
+                &quot;&quot;&quot;
+                The Target defines the domain-specific interface used by the client code.
+                &quot;&quot;&quot;
+            
+                def request(self) -&gt; str:
+                    return &quot;Target: The default target's behavior.&quot;
+            
+            
+            class Adaptee:
+                &quot;&quot;&quot;
+                The Adaptee contains some useful behavior, but its interface is incompatible
+                with the existing client code. The Adaptee needs some adaptation before the
+                client code can use it.
+                &quot;&quot;&quot;
+            
+                def specific_request(self) -&gt; str:
+                    return &quot;.eetpadA eht fo roivaheb laicepS&quot;
+            
+            
+            class Adapter(Target, Adaptee):
+                &quot;&quot;&quot;
+                The Adapter makes the Adaptee's interface compatible with the Target's
+                interface via multiple inheritance.
+                &quot;&quot;&quot;
+            
+                def request(self) -&gt; str:
+                    return f&quot;Adapter: (TRANSLATED) {self.specific_request()[::-1]}&quot;
+            
+            
+            def client_code(target: &quot;Target&quot;) -&gt; None:
+                &quot;&quot;&quot;
+                The client code supports all classes that follow the Target interface.
+                &quot;&quot;&quot;
+            
+                print(target.request(), end=&quot;&quot;)
+            
+            
+            if __name__ == &quot;__main__&quot;:
+                print(&quot;Client: I can work just fine with the Target objects:&quot;)
+                target = Target()
+                client_code(target)
+                print(&quot;\n&quot;)
+            
+                adaptee = Adaptee()
+                print(&quot;Client: The Adaptee class has a weird interface. &quot;
+                      &quot;See, I don't understand it:&quot;)
+                print(f&quot;Adaptee: {adaptee.specific_request()}&quot;, end=&quot;\n\n&quot;)
+            
+                print(&quot;Client: But I can work with it via the Adapter:&quot;)
+                adapter = Adapter()
+                client_code(adapter)
+            </pre>
+            <p>Resultado de la ejecución</p>
+            <pre class="code" lang="output">
+                Client: I can work just fine with the Target objects:
+                Target: The default target's behavior.
+                
+                Client: The Adaptee class has a weird interface. See, I don't understand it:
+                Adaptee: .eetpadA eht fo roivaheb laicepS
+                
+                Client: But I can work with it via the Adapter:
+                Adapter: (TRANSLATED) Special behavior of the Adaptee.
+            </pre>
+        </div>
+    </main>
+    <div class="volver">
+        <a href="index.html">Volver al Indice</a>
+    </div>
+    <footer>
+        <div class="referencias">
+            <h3>Contenido sacado de: </h3>
+            <ul>
+                <li><a href="https://es.wikipedia.org/wiki/Adaptador_(patr%C3%B3n_de_dise%C3%B1o)">Wikipedia</a></li>
+                <li><a href="https://refactoring.guru/es/design-patterns/adapter">Refactoring.guru</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>
