@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilo.css">
+    <title>Builder - Patrón de diseño</title>
+</head>
+<body>
+    <header>
+        <h1>Patrones de Diseño</h1>
+    </header>
+    <main>
+        <div class="apartado">
+            <h1>Singleton</h1>
+            <h3>Ámbito de uso</h3>
+
+            <p>El objetivo de este patrón es el de garantizar que una clase solo tenga una instancia (o ejemplar) y proporcionar un punto de acceso global a ella.</p>
+        
+            <h3>Utilidad</h3>
+        
+            <p>Es un patrón empleado habitualmente para las conexiones a bases de datos. Otros usos incluyen: logging, caches, thread pools, configuration settings, device driver objects.</p>
+        
+            <h3>Cómo funciona</h3>
+        
+            <p>Este patrón se implementa haciendo privado el constructor de la clase y creando (en la propia clase) un método que crea una instancia del objeto si este no existe. Además, para mejorar su implementación se suele sobreescribir el método clone() para que no permita ser clonado.</p>
+        
+            <h3>Ejemplo</h3>
+        
+            <p>En el siguiente ejemplo se aprecia como la clase SoyUnico dispone de un constructor privado al que solo se podrá acceder mediante un método, en este caso getSingletonInstance() que será
+            el encargado de crear una instancia de esta clase en caso de no haberse creado previamente.</p>
+        
+            <img src="./image/singleton-clase.png" alt="Clase Singleton." class="imagen_singleton">
+            <img src="./image/singleton-main.png" alt="Clase main que usa la clase singleton." class="imagen_singleton">
+            <img src="./image/singleton-resultado.png" alt="Código resultante al aplicar la clase singleton." class="imagen_singleton">
+        
+            <p>Por último sobreescribimos el método clone:</p>
+        
+            <img src="./image/singleton-clone.png" alt="Sobreescritura del método clone." class="imagen_singleton">
+            <img src="./image/singleton-clone-main.png" alt="Intento de clonar nuestra clase Singleton." class="imagen_singleton">
+            <img src="./image/singleton-resultado-clone.png" alt="Código resultante al intentar clonar nuestra clase singleton." class="imagen_singleton">
+        
+        </div>
+    </main>
+    <div class="volver">
+        <a href="index.html">Volver al Indice</a>
+    </div>
+    <footer>
+        <div class="referencias">
+            <h3>Contenido sacado de: </h3>
+            <p><a href="https://jarroba.com/patron-singleton-en-java-con-ejemplos/">Jarroba, patrón Singleton</a>
+        </div>
+    </footer>
+</body>
+</html>
