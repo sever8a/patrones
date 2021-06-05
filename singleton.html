@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,7 +40,8 @@
         
             <img src="./image/singleton-clone.png" alt="Sobreescritura del método clone." class="imagen_singleton">
             <img src="./image/singleton-clone-main.png" alt="Intento de clonar nuestra clase Singleton." class="imagen_singleton">
-            <img src="./image/singleton-resultado-clone.png" alt="Código resultante al intentar clonar nuestra clase singleton." class="imagen_singleton">
+            <img src="./image/s
+Información de interés sobre las pruebas finales:ingleton-resultado-clone.png" alt="Código resultante al intentar clonar nuestra clase singleton." class="imagen_singleton">
         
         </div>
     </main>
@@ -52,5 +54,129 @@
             <p><a href="https://jarroba.com/patron-singleton-en-java-con-ejemplos/">Jarroba, patrón Singleton</a>
         </div>
     </footer>
+
+	<header>
+		<h1>Entornos de Desarrollo 2021. Patrones de Diseño</h1>
+	</header>
+
+	<main
+Información de interés sobre las pruebas finales:>
+		<div class="apartado">
+			<h2>Singleton</h2>
+
+
+			<p>
+				Singleton es un patron de diseño creacional que nos permite que una clase tenga una sola instacia
+				durante toda la ejecución
+				de la aplicación y a la vez poder acceder a ella desde cualquier punto.
+			</p>
+			<p>Cuando diseñamos una aplicación, en muchos casos podemos necesitar alguna clase la cual necesitamos que
+				su estado sea el mismo
+				la usemos desde donde la usemos en la aplicación, por ejemplo, clases de conexion a bases de datos o
+				clases las cuales almacenen
+				datos necesarios en toda la aplicación, como por ejemplo datos de la sesion activa de un usuario.
+			</p>
+
+			<img class="img" src="image/singleton.png" title="Patrón de diseño facade." /><br />
+
+			<br>
+			<h2><b>Problema</b></h2>
+
+			<p><strong>El patron singleton soluciona los siguientes problemas:</strong> </p>
+
+			<ul>
+				<li>
+					<p>Garantiza que una clase tenga una instancia unica a traves del codigo.</p>
+
+				</li>
+				<li>
+					<p>Proporciona un punto de acceso global a la unica instancia de la clase.</p>
+
+				</li>
+
+
+			</ul>
+			<p><strong>¿De que manera los soluciona?</strong></p>
+			<p>Controlando cuando y como se instancia la clase y obligando a que se acceda a la instancia de la
+				misma
+				via la unica funcion publica de la clase conseguimos tener una instancia unica durante toda la
+				ejecución la cual se modifica para toda la aplicacion
+			</p>
+			<br>
+
+			<h2><b>Estructura</b></h2>
+			<img src="image/singleton-structure-es.png" title="Estructura facade." /><br />
+		</div>
+
+
+		<div class="apartado">
+			<h2>¿Como implementarlo?</h2>
+			<ol>
+				<li> Añade un campo estático privado a la clase para almacenar la instancia Singleton.
+				</li>
+				<li> Declara un método de creación estático público para obtener la instancia Singleton.
+				</li>
+				<li> Implementa una inicialización diferida dentro del método estático. Debe crear un nuevo objeto en su
+					primera llamada y
+					colocarlo dentro del campo estático. El método deberá devolver siempre esa instancia en todas las
+					llamadas siguientes.
+				</li>
+				<li> Declara el constructor de clase como privado. El método estático de la clase seguirá siendo capaz
+					de invocar al
+					constructor, pero no a los otros objetos.
+				</li>
+				<li> Repasa el código cliente y sustituye todas las llamadas directas al constructor de la instancia
+					Singleton por llamadas a
+					su método de creación estático.
+				</li>
+			</ol>
+			<p>
+				Ejemplo:
+			</p>
+
+			<pre>
+				public class Singleton {
+					private static Singleton singleton;
+					
+					
+					private Singleton() {
+					
+					}
+					
+					public static Singleton crearInstancia() {
+					
+							if(null==singleton) {
+								singleton = new Singleton();
+							}
+							return singleton;
+						}
+				
+				}
+
+			</pre>
+
+		</div>
+
+	</main>
+
+	<section>
+		<h2>Referencia Bibliografica utilizada:</h2><br />
+		<ul>
+			<li> Libro de la editorial RA-MA "Entornos de Desarrollo"</li>
+			<li><a href="https://en.wikipedia.org/wiki/Singleton_pattern">Wikipedia</a></li>
+			<li><a href="https://refactoring.guru/es/design-patterns/singleton">Refactoring.guru: Singleton </a></li>
+
+		</ul>
+
+	</section>
+	<div class="volver">
+		<a href="index.html">Volver a la pagina principal</a>
+	</div>
+
+	<footer>
+		<p>Patrones de diseño. SINGLETON por Adolfo Sobrino Gómez</p>
+	</footer>
+
 </body>
+
 </html>
